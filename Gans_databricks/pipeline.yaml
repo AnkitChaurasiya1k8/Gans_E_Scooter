@@ -1,0 +1,74 @@
+resources:
+  jobs:
+    scooter_demand_pipeline:
+      name: scooter_demand_pipeline
+      tasks:
+        - task_key: weather
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/weather
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: transport
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/transport
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: time
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/time
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: poi
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/poi
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: city
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/city
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: silver_all
+          depends_on:
+            - task_key: poi
+            - task_key: city
+            - task_key: weather
+            - task_key: time
+            - task_key: transport
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/silver_all
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: final_silver
+          depends_on:
+            - task_key: silver_all
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/final_silver
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: all_scores
+          depends_on:
+            - task_key: final_silver
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/all_scores
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+        - task_key: gold
+          depends_on:
+            - task_key: all_scores
+          notebook_task:
+            notebook_path: /Users/ankitchaurasiya1341@gmail.com/Gans_databricks/gold_notebooks
+            source: WORKSPACE
+          job_cluster_key: default_cluster
+      job_clusters:
+        - job_cluster_key: default_cluster
+          new_cluster:
+            spark_version: 13.3.x-scala2.12
+            azure_attributes:
+              availability: ON_DEMAND_AZURE
+            node_type_id: Standard_DS3_v2
+            enable_elastic_disk: true
+            data_security_mode: SINGLE_USER
+            num_workers: 2
+      queue:
+        enabled: true
