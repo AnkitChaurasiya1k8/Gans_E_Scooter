@@ -1,0 +1,11 @@
+city,airport_count,rail_count,flights_per_day,trains_per_day
+Delhi,2,10,1200,350
+Mumbai,2,8,1000,300
+Bengaluru,1,6,800,220
+Hyderabad,1,6,700,200
+Chennai,1,7,750,250
+Kolkata,1,7,650,240
+Agra,1,5,400,150
+Ahmedabad,1,5,450,160
+Surat,1,4,350,140
+Varanasi,1,4,300,120

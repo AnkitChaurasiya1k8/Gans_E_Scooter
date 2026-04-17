@@ -2,8 +2,13 @@
 import requests
 import pandas as pd
 import time
+from dotenv import load_dotenv
+import os
 
-API_KEY = "566e60c94faab196761b02f860638862"
+# Load .env file
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 file_path = "abfss://bronze@escooterstorage123.dfs.core.windows.net/cities.csv"
 
